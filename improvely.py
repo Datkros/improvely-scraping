@@ -122,7 +122,7 @@ def scrap_data(next_page=False, page=1):
 	if not next_page:
 		return None
 	response = s.get(next_page)
-	print(page)
+	print("Now scraping page #{}".format(page))
 	html_page = html.document_fromstring(response.content)
 	tbody = html_page.xpath('//*[@id="report"]/tbody/tr')
 	for tr in tbody:
@@ -139,7 +139,6 @@ def scrap_data(next_page=False, page=1):
 				info_html = s.get('{}{}'.format(MAIN_URL, link))
 				info_page = html.document_fromstring(info_html.content)
 				user_id = info_page.xpath('/html/body/div[3]/div[1]/div/div/h1/text()')[0]
-				print(user_id)
 				key_metrics = info_page.xpath('//div[@class="page-content key-metrics"]')[0]
 				visits = int(key_metrics.xpath('div/div/b/text()')[0].replace(',',''))
 				conversions_info = int(key_metrics.xpath('div/div[2]/b/text()')[0])
